@@ -106,11 +106,11 @@ int main(void)
     timeStamps.push_back("2023/06/29 17:01:24.884407");
     products.push_back("BTC/USDT");
     orderTypes.push_back(OrderBookType::bid);
-    std::cout << "First row amount" << amounts[0] << std::endl; 
-    std::cout << "First row price" << prices[0] << std::endl;
-    std::cout << "First row time stamp" << timeStamps[0] << std::endl;
-    std::cout << "First row products" << products[0] << std::endl;
-    std::cout << "First order book type" << std::endl; 
+    std::cout << "First row amountasdasda " << amounts[0] << std::endl; 
+    std::cout << "First row price: " << prices[0] << std::endl;
+    std::cout << "First row time stamp: " << timeStamps[0] << std::endl;
+    std::cout << "First row products: " << products[0] << std::endl;
+    std::cout << "First order book type: " << std::endl; 
 
     while(true)
     {
