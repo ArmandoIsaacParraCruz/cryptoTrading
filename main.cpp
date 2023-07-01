@@ -4,6 +4,27 @@
 
 enum class OrderBookType{bid,ask};
 
+class OrderBookEntry
+{
+    public:
+        double amount;
+        double price;
+        std::string timestamp;
+        std::string product;
+        OrderBookType orderType;
+        OrderBookEntry(double _amount, double _price, std::string _timestamp,
+                        std::string _product, OrderBookType _orderType);
+};
+
+OrderBookEntry::OrderBookEntry(double _amount, double _price, std::string _timestamp, 
+                                std::string _product, OrderBookType _orderType):
+    amount(_amount), price(_price), timestamp(_timestamp), product(_product), orderType(_orderType)
+{
+
+}
+
+
+
 void printMenu()
 {
     std::cout << "Typein1-6" << std::endl;
@@ -90,27 +111,43 @@ void processUserOption(int userOption)
     }
 }
 
+/**
+OrderBookEntry::OrderBookEntry(double _amount, double _price, std::string _timestamp, 
+                                std::string _product, OrderBookType _orderType):
+    amount(_amount), price(_price), timestamp(_timestamp), product(_product), orderType(_orderType)
+{
 
+}
+*/
 
 int main(void)
 {
     int userOption;
-    std::vector<double> amounts;
-    std::vector<double> prices;
-    std::vector<std::string> timeStamps;
-    std::vector<std::string> products;
-    std::vector<OrderBookType> orderTypes;
-
-    amounts.push_back(0.5); 
-    prices.push_back(0.00254);
-    timeStamps.push_back("2023/06/29 17:01:24.884407");
-    products.push_back("BTC/USDT");
-    orderTypes.push_back(OrderBookType::bid);
-    std::cout << "First row amount:" << amounts[0] << std::endl; 
-    std::cout << "First row price: " << prices[0] << std::endl;
-    std::cout << "First row time stamp: " << timeStamps[0] << std::endl;
-    std::cout << "First row products: " << products[0] << std::endl;
-    std::cout << "First order book type: " << std::endl; 
+    
+    OrderBookEntry obe1{7.44564869, 0.02187308, "2020/03/17 17:01:24.884492",
+                        "ETH/BTC", OrderBookType::bid};
+    OrderBookEntry obe2{3.467434, 0.02187307, "2020/03/17 17:01:24.884492",
+                        "ETH/BTC", OrderBookType::ask};
+    OrderBookEntry obe3{6.85567013, 0.02187305, "2020/03/17 17:01:24.884492",
+                        "ETH/BTC", OrderBookType::bid};
+    
+    std::vector<OrderBookEntry> orders;
+    orders.push_back(obe1);
+    orders.push_back(obe1);
+    orders.push_back(obe3);
+    
+    for(OrderBookEntry& order: orders)
+    {
+        std::cout << order.timestamp << ",";
+        std::cout << order.product << ",";
+        if(order.orderType == OrderBookType::bid) {
+            std::cout << "bid" << ",";
+        } else {
+            std::cout << "ask" << ",";
+        }
+        std::cout << order.price << ",";
+        std::cout << order.amount << std::endl;
+    }
 
     while(true)
     {
@@ -120,3 +157,5 @@ int main(void)
     }
     return 0;
 }
+
+
