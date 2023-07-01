@@ -111,6 +111,50 @@ void processUserOption(int userOption)
     }
 }
 
+double computeAveragePrice(std::vector<OrderBookEntry>& entries)
+{
+    double sum = 0;
+    for(size_t i = 0; i < entries.size(); ++i)
+    {
+        sum += entries[i].price;
+    }
+
+    return sum/entries.size();
+}
+
+double computeLowPrice(std::vector<OrderBookEntry>& entries)
+{
+    double lowPrice = entries[0].price;
+    for(size_t i = 1; i < entries.size(); ++i)
+    {
+        if(entries[i].price < lowPrice)
+        {
+            lowPrice = entries[i].price;
+        }
+    }
+    return lowPrice;
+}
+
+double computeHighPrice(std::vector<OrderBookEntry>& entries)
+{
+    double highPrice = entries[0].price;
+    for(size_t i = 1; i < entries.size(); ++i)
+    {
+        if(entries[i].price > highPrice)
+        {
+            highPrice = entries[i].price;
+        }
+    }
+    return highPrice;
+}
+
+double computePriceSpread(std::vector<OrderBookEntry>& entries)
+{
+    double highPrice = computeHighPrice(entries);
+    double lowPrice = computeLowPrice(entries);
+    return highPrice - lowPrice;
+}
+
 /**
 OrderBookEntry::OrderBookEntry(double _amount, double _price, std::string _timestamp, 
                                 std::string _product, OrderBookType _orderType):
@@ -124,16 +168,16 @@ int main(void)
 {
     int userOption;
     
-    OrderBookEntry obe1{7.44564869, 0.02187308, "2020/03/17 17:01:24.884492",
+    OrderBookEntry obe1{7.44564869, 0.5, "2020/03/17 17:01:24.884492",
                         "ETH/BTC", OrderBookType::bid};
-    OrderBookEntry obe2{3.467434, 0.02187307, "2020/03/17 17:01:24.884492",
+    OrderBookEntry obe2{3.467434, 0.3, "2020/03/17 17:01:24.884492",
                         "ETH/BTC", OrderBookType::ask};
-    OrderBookEntry obe3{6.85567013, 0.02187305, "2020/03/17 17:01:24.884492",
+    OrderBookEntry obe3{6.85567013, 0.4, "2020/03/17 17:01:24.884492",
                         "ETH/BTC", OrderBookType::bid};
     
     std::vector<OrderBookEntry> orders;
     orders.push_back(obe1);
-    orders.push_back(obe1);
+    orders.push_back(obe2);
     orders.push_back(obe3);
     
     for(OrderBookEntry& order: orders)
@@ -149,6 +193,11 @@ int main(void)
         std::cout << order.amount << std::endl;
     }
 
+    std::cout << "Average: " << computeAveragePrice(orders) << std::endl;
+    std::cout << "Low Price: " << computeLowPrice(orders) << std::endl;
+    std::cout << "High Price: " << computeHighPrice(orders) << std::endl;
+    std::cout << "Price Spread: " << computePriceSpread(orders) << std::endl;
+    
     while(true)
     {
         printMenu();
