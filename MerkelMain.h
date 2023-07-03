@@ -1,6 +1,9 @@
 #pragma once
 #include <vector>
+#include <string>
+#include <iostream>
 #include "OrderBookEntry.h"
+
 
 class MerkelMain
 {

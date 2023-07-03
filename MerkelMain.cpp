@@ -1,6 +1,5 @@
 #include "MerkelMain.h"
-#include <iostream>
-#include <vector>
+
 
 void MerkelMain::init()
 {
@@ -23,10 +22,10 @@ void MerkelMain::loadOrderBook()
     OrderBookEntry obe3{6.85567013, 0.4, "2020/03/17 17:01:24.884492",
                         "ETH/BTC", OrderBookType::bid};
     
-    std::vector<OrderBookEntry> orders;
     orders.push_back(obe1);
     orders.push_back(obe2);
     orders.push_back(obe3);
+
 }
 
 
