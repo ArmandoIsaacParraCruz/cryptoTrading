@@ -4,6 +4,7 @@
 #include <fstream>
 #include "MerkelMain.h"
 #include "OrderBookEntry.h"
+#include "CropPriceData.h"
 
 std::vector<std::string> tokenise(std::string csvLine, char separator) 
 { 
