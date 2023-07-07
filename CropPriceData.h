@@ -7,8 +7,9 @@
 class CropPriceData
 {
     public:
-        CropPriceData(std::string _districName, std::string _cropName, std::string _marketName, std::string _date, double _price);
-        std::string districName;
+        CropPriceData(std::string _districtame, std::string _cropName, 
+                        std::string _marketName, std::string _date, double _price);
+        std::string districtName;
         std::string cropName;
         std::string marketName;
         std::string date;
