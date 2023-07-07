@@ -31,7 +31,7 @@ std::vector<std::string> tokenise(std::string csvLine, char separator)
 
 int main(void)
 {
-    std::string csvFilenName{"20200317.csv"};
+    std::string csvFilenName{"crop_price_data.csv"};
     std::ifstream csvFile{csvFilenName};
     std::string line;
     if(csvFile.is_open()) {
@@ -39,6 +39,8 @@ int main(void)
     } else {
         std::cout << "Problem opening file " << csvFilenName << std::endl;
     }
+    std::getline(csvFile,line); 
+    std::cout<<"Read line "<<line<<std::endl;
     csvFile.close();
     /*MerkelMain app{};
     app.init();*/
