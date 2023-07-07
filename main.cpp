@@ -41,7 +41,7 @@ int main(void)
         std::cout << "Problem opening file " << csvFilenName << std::endl;
     }
     std::getline(csvFile,line); 
-    std::cout<<"Read line "<<line<<std::endl;
+    std::cout<<"Read line"<<line<<std::endl;
     csvFile.close();
     /*MerkelMain app{};
     app.init();*/
