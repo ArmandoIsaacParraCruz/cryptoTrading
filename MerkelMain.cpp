@@ -15,17 +15,8 @@ void MerkelMain::init()
 
 void MerkelMain::loadOrderBook()
 {
-    OrderBookEntry obe1{7.44564869, 0.5, "2020/03/17 17:01:24.884492",
-                        "ETH/BTC", OrderBookType::bid};
-    OrderBookEntry obe2{3.467434, 0.3, "2020/03/17 17:01:24.884492",
-                        "ETH/BTC", OrderBookType::ask};
-    OrderBookEntry obe3{6.85567013, 0.4, "2020/03/17 17:01:24.884492",
-                        "ETH/BTC", OrderBookType::bid};
-    
-    orders.push_back(obe1);
-    orders.push_back(obe2);
-    orders.push_back(obe3);
-
+    orders = CSVReader::readCSV("20200317.csv");
+    std::cout << "MerkelMain::loadOrderBook read " << orders.size() << " orders" << std::endl;
 }
 
 
@@ -61,8 +52,10 @@ void MerkelMain::printMarketStats()
         std::cout << order.product << ",";
         if(order.orderType == OrderBookType::bid) {
             std::cout << "bid" << ",";
+        } else if(order.orderType == OrderBookType::ask){
+            std::cout << "ask" << ","; 
         } else {
-            std::cout << "ask" << ",";
+            std::cout << "unknown" << ","; 
         }
         std::cout << order.price << ",";
         std::cout << order.amount << std::endl;
