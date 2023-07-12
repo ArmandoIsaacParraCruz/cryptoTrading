@@ -4,6 +4,7 @@
 #include <iostream>
 #include "OrderBookEntry.h"
 #include "CSVReader.h"
+#include "OrderBook.h"
 
 
 class MerkelMain
@@ -13,7 +14,7 @@ class MerkelMain
         /** Call this to start the simulation*/
         void init();
     private:
-        void loadOrderBook();
+        OrderBook orderBook{"20200317.csv"};
         void printMenu();
         void printHelp();
         void printMarketStats();
@@ -24,9 +25,4 @@ class MerkelMain
         int getUserOption();
         void processUserOption(int userOption);
         void printInvalidOption();
-        double computeAveragePrice(std::vector<OrderBookEntry>& entries);
-        double computeLowPrice(std::vector<OrderBookEntry>& entries);
-        double computeHighPrice(std::vector<OrderBookEntry>& entries);
-        double computePriceSpread(std::vector<OrderBookEntry>& entries);
-        std::vector<OrderBookEntry> orders;
 };
