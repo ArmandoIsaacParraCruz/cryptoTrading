@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <math.h>
 
 class OrderBook
 {
@@ -17,14 +18,22 @@ class OrderBook
         std::vector<OrderBookEntry> getOrders(OrderBookType type,
                                                 std::string product,
                                                 std::string timestamp);
-        /**return the price of the highest bid in the sent set*/
+        
+        /**returns the earliest time in the orderbook*/
+        std::string getEarliestTime();
+        /**returns tthe nest time after the sent in the orderbook*/
+        std::string getNextTime(std::string timestamp);
+
+        /**returns the price of the highest bid in the sent set*/
         static double getHighPrice(std::vector<OrderBookEntry>& orders);
-        /**return the price of the lowest bit in the sent set*/
+        /**returns the price of the lowest bit in the sent set*/
         static double getLowPrice(std::vector<OrderBookEntry>& orders);
-        /**return the average price bid in the sent set*/
+        /**returns the average price bid in the sent set*/
         static double getAveragePrice(std::vector<OrderBookEntry>& orders);
-        /**return the spread price bit in the sent set*/
+        /**returns the spread price bit in the sent set*/
         static double getSpreadPrice(std::vector<OrderBookEntry>& orders);
+        /**returns the standar deviation of the price in the sent set*/
+        static double getStandardDeviation(std::vector<OrderBookEntry>& orders);
 
     private:
         std::vector<OrderBookEntry> orders;

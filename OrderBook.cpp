@@ -31,6 +31,28 @@ std::vector<OrderBookEntry> OrderBook::getOrders(OrderBookType type, std::string
     return orders_sub;
 }
 
+std::string OrderBook::getEarliestTime()
+{
+    return orders[0].timestamp;
+}
+
+std::string OrderBook::getNextTime(std::string timestamp)
+{
+    std::string nextTimestamp = "";
+    for(OrderBookEntry& e: orders) {
+        if(e.timestamp > timestamp) {
+            nextTimestamp = e.timestamp;
+            break;
+        }
+    }
+
+    if(nextTimestamp == "") {
+        nextTimestamp = getEarliestTime();
+    }
+
+    return nextTimestamp;
+}
+
 double OrderBook::getHighPrice(std::vector<OrderBookEntry> &orders)
 {
     double max = orders[0].price;
@@ -53,20 +75,37 @@ double OrderBook::getLowPrice(std::vector<OrderBookEntry> &orders)
     return min;
 }
 
-double OrderBook::getAveragePrice(std::vector<OrderBookEntry> &orders)
-{
-    double sum = 0;
-    for(size_t i = 0; i < orders.size(); ++i)
-    {
-        sum += orders[i].price;
-    }
 
-    return sum/orders.size();
-}
 
 double OrderBook::getSpreadPrice(std::vector<OrderBookEntry> &orders)
 {
     double highPrice = getHighPrice(orders);
     double lowPrice = getLowPrice(orders);
     return highPrice - lowPrice;
+}
+
+/**returns the average of the price in the sent set */
+double OrderBook::getAveragePrice(std::vector<OrderBookEntry> &orders)
+{
+    double sum = 0;
+    for(OrderBookEntry& e: orders) {
+        sum += e.price;
+    }
+    return sum/orders.size();
+}
+
+/**returns the standard deviation of the price in the sent set */
+double OrderBook::getStandardDeviation(std::vector<OrderBookEntry> &orders)
+{
+    double standartDeviation, 
+            sum = 0, 
+            average = getAveragePrice(orders);
+
+    for(OrderBookEntry& e: orders) {
+        sum += std::pow(e.price - average, 2); 
+    }
+
+    sum /= orders.size();
+    standartDeviation = std::sqrt(sum); 
+    return standartDeviation;
 }

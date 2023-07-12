@@ -4,6 +4,7 @@
 void MerkelMain::init()
 {
     int input;
+    currentTime = orderBook.getEarliestTime();
     while(true)
     {
         printMenu();
@@ -24,6 +25,8 @@ void MerkelMain::printMenu()
     std::cout << "4: Place a bid" << std::endl;
     std::cout << "5: Print wallet" << std::endl;
     std::cout << "6: Continue" << std::endl;
+    std::cout << "=======================" << std::endl;
+    std::cout << "Current time is: " << currentTime << std::endl;
 }
 
 int MerkelMain::getUserOption()
@@ -43,12 +46,13 @@ void MerkelMain::printMarketStats()
 {
     for(std::string const p: orderBook.getKnowProducts()) {
         std::cout << "Products: " << p << std::endl;
-        std::vector<OrderBookEntry> entries = orderBook.getOrders(OrderBookType::ask, p, "2020/03/17 17:01:24.884492");
+        std::vector<OrderBookEntry> entries = orderBook.getOrders(OrderBookType::ask, p, currentTime);
         std::cout << "Ask seen: " <<entries.size() << std::endl;
         std::cout << "Max ask: " << OrderBook::getHighPrice(entries) << std::endl;
         std::cout << "Min ask: " << OrderBook::getLowPrice(entries) << std::endl;
         std::cout << "Average ask: " << OrderBook::getAveragePrice(entries) << std::endl;
         std::cout << "Spread ask: " << OrderBook::getSpreadPrice(entries) << std::endl;
+        std::cout << "Standart Devation ask: " << OrderBook::getStandardDeviation(entries) << std::endl;
     }
 }
 
@@ -70,6 +74,7 @@ void MerkelMain::printWallet()
 void MerkelMain::gotoNextTimeFrame()
 {
     std::cout << "Going to the nest time frame..." << std::endl;
+    currentTime = orderBook.getNextTime(currentTime);
 }
 
 void MerkelMain::printInvalidOption()
