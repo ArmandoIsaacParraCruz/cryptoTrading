@@ -3,7 +3,6 @@
 
 void MerkelMain::init()
 {
-    loadOrderBook();
     int input;
     while(true)
     {
@@ -13,11 +12,7 @@ void MerkelMain::init()
     }
 }
 
-void MerkelMain::loadOrderBook()
-{
-    orders = CSVReader::readCSV("20200317.csv");
-    std::cout << "MerkelMain::loadOrderBook read " << orders.size() << " orders" << std::endl;
-}
+
 
 
 void MerkelMain::printMenu()
@@ -46,19 +41,14 @@ void MerkelMain::printHelp()
 
 void MerkelMain::printMarketStats()
 {
-     for(OrderBookEntry& order: orders)
-    {
-        std::cout << order.timestamp << ",";
-        std::cout << order.product << ",";
-        if(order.orderType == OrderBookType::bid) {
-            std::cout << "bid" << ",";
-        } else if(order.orderType == OrderBookType::ask){
-            std::cout << "ask" << ","; 
-        } else {
-            std::cout << "unknown" << ","; 
-        }
-        std::cout << order.price << ",";
-        std::cout << order.amount << std::endl;
+    for(std::string const p: orderBook.getKnowProducts()) {
+        std::cout << "Products: " << p << std::endl;
+        std::vector<OrderBookEntry> entries = orderBook.getOrders(OrderBookType::ask, p, "2020/03/17 17:01:24.884492");
+        std::cout << "Ask seen: " <<entries.size() << std::endl;
+        std::cout << "Max ask: " << OrderBook::getHighPrice(entries) << std::endl;
+        std::cout << "Min ask: " << OrderBook::getLowPrice(entries) << std::endl;
+        std::cout << "Average ask: " << OrderBook::getAveragePrice(entries) << std::endl;
+        std::cout << "Spread ask: " << OrderBook::getSpreadPrice(entries) << std::endl;
     }
 }
 
@@ -92,73 +82,22 @@ void MerkelMain::processUserOption(int userOption)
     std::cout << "Your choice: " << userOption << std::endl;
     if (userOption == 1) {
         printHelp();
-    }
-    else if (userOption == 2)
+    } else if (userOption == 2)
     {
         printMarketStats();
-    }
-    else if (userOption == 3)
+    } else if (userOption == 3)
     {
         enterOffer();
-    }
-    else if (userOption == 4)
+    } else if (userOption == 4)
     {
         enterBid();
-    }
-    else if (userOption == 5)
+    } else if (userOption == 5)
     {
         printWallet();
-    }
-    else if (userOption == 6)
-    {
+    } else if (userOption == 6) {
         gotoNextTimeFrame();
-    }
-    else
-    {
+    } else {
         printInvalidOption();
     }
 }
 
-double MerkelMain::computeAveragePrice(std::vector<OrderBookEntry>& entries)
-{
-    double sum = 0;
-    for(size_t i = 0; i < entries.size(); ++i)
-    {
-        sum += entries[i].price;
-    }
-
-    return sum/entries.size();
-}
-
-double MerkelMain::computeLowPrice(std::vector<OrderBookEntry>& entries)
-{
-    double lowPrice = entries[0].price;
-    for(size_t i = 1; i < entries.size(); ++i)
-    {
-        if(entries[i].price < lowPrice)
-        {
-            lowPrice = entries[i].price;
-        }
-    }
-    return lowPrice;
-}
-
-double MerkelMain::computeHighPrice(std::vector<OrderBookEntry>& entries)
-{
-    double highPrice = entries[0].price;
-    for(size_t i = 1; i < entries.size(); ++i)
-    {
-        if(entries[i].price > highPrice)
-        {
-            highPrice = entries[i].price;
-        }
-    }
-    return highPrice;
-}
-
-double MerkelMain::computePriceSpread(std::vector<OrderBookEntry>& entries)
-{
-    double highPrice = computeHighPrice(entries);
-    double lowPrice = computeLowPrice(entries);
-    return highPrice - lowPrice;
-}
