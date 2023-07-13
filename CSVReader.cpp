@@ -46,6 +46,22 @@ std::vector<std::string> CSVReader::tokenise(std::string csvLine, char separator
     return tokens;
 }
 
+OrderBookEntry CSVReader::stringToOrderBookEntry(std::string priceString, std::string amountString, std::string timestamp, std::string product, OrderBookType orderBookType)
+{
+    double price, amount;
+    try {
+        price = std::stod(priceString);
+        amount = std::stod(amountString);
+    } catch(const std::exception& e) {
+        std::cout << "it isn't a double" << priceString << std::endl;
+        std::cout << "it isn't a double" << amountString << std::endl;
+        throw;
+    }
+
+    OrderBookEntry obe{price, amount, timestamp, product, orderBookType};
+    return obe;
+}
+
 OrderBookEntry CSVReader::stringToOrderBookEntry(std::vector<std::string> tokens)
 {
     double price, amount; const uint8_t correctSizeOfToken = 5;

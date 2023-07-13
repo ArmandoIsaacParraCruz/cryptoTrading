@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 #include <math.h>
+#include <algorithm>
 
 class OrderBook
 {
@@ -19,11 +20,12 @@ class OrderBook
                                                 std::string product,
                                                 std::string timestamp);
         
+        std::vector<OrderBookEntry> matchAsksToBids(std::string product, std::string timestamp);
+        void insertOrder(OrderBookEntry& order);
         /**returns the earliest time in the orderbook*/
         std::string getEarliestTime();
         /**returns tthe nest time after the sent in the orderbook*/
         std::string getNextTime(std::string timestamp);
-
         /**returns the price of the highest bid in the sent set*/
         static double getHighPrice(std::vector<OrderBookEntry>& orders);
         /**returns the price of the lowest bit in the sent set*/

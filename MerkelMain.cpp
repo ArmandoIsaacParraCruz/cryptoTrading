@@ -25,14 +25,22 @@ void MerkelMain::printMenu()
     std::cout << "4: Place a bid" << std::endl;
     std::cout << "5: Print wallet" << std::endl;
     std::cout << "6: Continue" << std::endl;
-    std::cout << "=======================" << std::endl;
+    std::cout << "===========================================" << std::endl;
     std::cout << "Current time is: " << currentTime << std::endl;
 }
 
 int MerkelMain::getUserOption()
 {
-    int userOption;
-    std::cin >> userOption;
+    int userOption; 
+    std::string line;
+    std::getline(std::cin, line);
+    try {
+            userOption = std::stoi(line);
+    } catch(const std::exception& e) {
+            std::cout << "'"<< line <<"'" << " is not a valid option" << std::endl;
+    }   
+    
+   
     return userOption;
 }
 
@@ -53,17 +61,48 @@ void MerkelMain::printMarketStats()
         std::cout << "Average ask: " << OrderBook::getAveragePrice(entries) << std::endl;
         std::cout << "Spread ask: " << OrderBook::getSpreadPrice(entries) << std::endl;
         std::cout << "Standart Devation ask: " << OrderBook::getStandardDeviation(entries) << std::endl;
+        std::cout << "===========================================" << std::endl;
     }
 }
 
-void MerkelMain::enterOffer()
+void MerkelMain::enterAsk()
 {
-    std::cout << "Enter the amount to make an offer" << std::endl;
+    std::cout << "Enter the amount to make an ask: product, price, eg, ETH/BTC,200,0.5" << std::endl;
+    std::string input;
+    //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin, input);
+    std::vector<std::string> tokens = CSVReader::tokenise(input, ',');
+    if(tokens.size() != 3) {
+        std::cout << "An input error occurred" << std::endl;
+    } else {
+        std::cout << "You typed " << input << std::endl;
+        try {
+            OrderBookEntry obe = CSVReader::stringToOrderBookEntry(tokens[1], tokens[2], currentTime, tokens[0], OrderBookType::ask);
+            orderBook.insertOrder(obe);
+        } catch(const std::exception& e) {
+            std::cout << "The 'ask' is invalid" << std::endl;
+        }   
+    }
 }
 
 void MerkelMain::enterBid()
 {
-    std::cout << "Enter the amount to make a bid" << std::endl;
+    std::cout << "Enter the amount to make a bid: product, price, eg, ETH/BTC,200,0.5" << std::endl;
+    std::string input;
+    //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin, input);
+    std::vector<std::string> tokens = CSVReader::tokenise(input, ',');
+    if(tokens.size() != 3) {
+        std::cout << "An input error occurred" << std::endl;
+    } else {
+        std::cout << "You typed " << input << std::endl;
+        try {
+            OrderBookEntry obe = CSVReader::stringToOrderBookEntry(tokens[1], tokens[2], currentTime, tokens[0], OrderBookType::bid);
+            orderBook.insertOrder(obe);
+        } catch(const std::exception& e) {
+            std::cout << "The 'bid' is invalid" << std::endl;
+        }
+    }   
 }
 
 void MerkelMain::printWallet()
@@ -85,24 +124,36 @@ void MerkelMain::printInvalidOption()
 void MerkelMain::processUserOption(int userOption)
 {
     std::cout << "Your choice: " << userOption << std::endl;
-    if (userOption == 1) {
-        printHelp();
-    } else if (userOption == 2)
+
+    switch (userOption)
     {
-        printMarketStats();
-    } else if (userOption == 3)
-    {
-        enterOffer();
-    } else if (userOption == 4)
-    {
-        enterBid();
-    } else if (userOption == 5)
-    {
-        printWallet();
-    } else if (userOption == 6) {
-        gotoNextTimeFrame();
-    } else {
-        printInvalidOption();
+        case 1:
+            printHelp();
+        break;
+
+        case 2:
+            printMarketStats();
+        break;
+
+        case 3:
+           enterAsk();
+        break;
+
+        case 4:
+             enterBid();
+        break;
+
+        case 5:
+           printWallet();
+        break;
+
+        case 6:
+            gotoNextTimeFrame();
+        break;
+        
+        default:
+            printInvalidOption();
+        break;
     }
 }
 

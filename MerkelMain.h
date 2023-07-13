@@ -2,6 +2,8 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <limits>
+#include <algorithm>
 #include "OrderBookEntry.h"
 #include "CSVReader.h"
 #include "OrderBook.h"
@@ -20,7 +22,7 @@ class MerkelMain
         void printMenu();
         void printHelp();
         void printMarketStats();
-        void enterOffer();
+        void enterAsk();
         void enterBid();
         void printWallet();
         void gotoNextTimeFrame();
