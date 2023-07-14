@@ -7,7 +7,7 @@
 #include "OrderBookEntry.h"
 #include "CSVReader.h"
 #include "OrderBook.h"
-
+#include "Wallet.h"
 
 class MerkelMain
 {
@@ -18,7 +18,8 @@ class MerkelMain
     private:
         OrderBook orderBook{"20200317.csv"};
         std::string currentTime;
-
+        Wallet wallet{};
+        
         void printMenu();
         void printHelp();
         void printMarketStats();
