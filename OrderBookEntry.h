@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-enum class OrderBookType{bid, ask, sale,unknown};
+enum class OrderBookType{bid, ask, asksale, bidsale,unknown};
 
 class OrderBookEntry
 {
@@ -13,10 +13,11 @@ class OrderBookEntry
         std::string timestamp;
         std::string product;
         OrderBookType orderType;
-        OrderBookEntry(double _amount, double _price, std::string _timestamp,
-                        std::string _product, OrderBookType _orderType);
+        OrderBookEntry(double _price, double _amount, std::string _timestamp,
+                        std::string _product, OrderBookType _orderType, std::string username = "dataset");
         static OrderBookType stringToOrderBookType(const std::string& s);
         static bool compareByTimestamp(OrderBookEntry& e1, OrderBookEntry& e2);
         static bool compareByPriceAsc(OrderBookEntry& e1, OrderBookEntry& e2);
         static bool compareByPriceDesc(OrderBookEntry& e1, OrderBookEntry& e2);
+        std::string username;
 };

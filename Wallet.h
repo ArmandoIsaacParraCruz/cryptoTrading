@@ -19,6 +19,11 @@ class Wallet
         std::string toString();
         /**cheks if the wallet can cope with this ask or bid*/
         bool canFulfillOrder(const OrderBookEntry order);
+        /**update the constents of the wallet
+         * assumes the order was made by the owner of the wallet
+        */
+        void processSale(OrderBookEntry& sale);
+
     private:
         std::map<std::string, double> currencies;
         
