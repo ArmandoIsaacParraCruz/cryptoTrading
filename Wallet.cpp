@@ -86,9 +86,9 @@ void Wallet::processSale(OrderBookEntry &sale)
         currencies[outgoingCurrency] -= outgoingAmount;
     } else if(sale.orderType == OrderBookType::bidsale) {
         double incomingAmount  = sale.amount;
-        std::string outgoingCurrency = currs[0];
+        std::string incomingCurrency = currs[0];
         double outgoingAmount  = sale.amount * sale.price;
-        std::string incomingCurrency = currs[1];
+        std::string outgoingCurrency = currs[1];
         
         currencies[incomingCurrency] += incomingAmount;
         currencies[outgoingCurrency] -= outgoingAmount;
