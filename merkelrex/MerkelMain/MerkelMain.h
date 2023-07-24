@@ -4,10 +4,10 @@
 #include <iostream>
 #include <limits>
 #include <algorithm>
-#include "OrderBookEntry.h"
-#include "CSVReader.h"
-#include "OrderBook.h"
-#include "Wallet.h"
+#include "../OrderBookEntry/OrderBookEntry.h"
+#include "../CSVReader/CSVReader.h"
+#include "../OrderBook/OrderBook.h" 
+#include "../Wallet/Wallet.h"
 
 class MerkelMain
 {
@@ -16,7 +16,7 @@ class MerkelMain
         /** Call this to start the simulation*/
         void init();
     private:
-        OrderBook orderBook{"20200317.csv"};
+        OrderBook orderBook{"../MerkelMain/20200317.csv"};
         std::string currentTime;
         Wallet wallet{};
         

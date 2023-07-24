@@ -1,7 +1,7 @@
 #pragma once
 
-#include "OrderBookEntry.h"
-#include "CSVReader.h"
+#include "../OrderBookEntry/OrderBookEntry.h"
+#include "../CSVReader/CSVReader.h"
 #include <string>
 #include <vector>
 #include <map>

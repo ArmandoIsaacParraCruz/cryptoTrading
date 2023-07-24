@@ -1,10 +1,7 @@
 #include <iostream> 
 #include <vector> 
 #include <string>
-#include "MerkelMain.h"
-#include "OrderBookEntry.h"
-#include "CSVReader.h"
-#include "Wallet.h"
+#include "../MerkelMain/MerkelMain.h"
 
 
 int main(void)
@@ -13,5 +10,6 @@ int main(void)
     app.init();
     return 0;
 }
+
 
 

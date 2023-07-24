@@ -2,8 +2,8 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include "OrderBookEntry.h"
-#include "CSVReader.h"
+#include "../OrderBookEntry/OrderBookEntry.h"
+#include "../CSVReader/CSVReader.h"
 
 class Wallet 
 {
