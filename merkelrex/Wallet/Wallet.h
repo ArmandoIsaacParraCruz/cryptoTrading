@@ -25,6 +25,7 @@ class Wallet
         void processSale(OrderBookEntry& sale);
 
     private:
+        /** A map to store the currencies and their corresponding amounts in the wallet. */
         std::map<std::string, double> currencies;
         
 };
