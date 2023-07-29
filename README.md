@@ -21,7 +21,7 @@ git clone https://github.com/your-username/cryptosim.git
 
 2. Navigate to the project directory:
 
-cd merkelrex
+cd merkelrex,
 cd scr
 
 
